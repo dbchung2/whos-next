@@ -35,6 +35,11 @@
       animation: fadeInUp 0.4s ease forwards;
       position: relative;
       text-align: left;
+      cursor: pointer;
+    }
+
+    li.green {
+      background-color: #d4edda; /* Light green */
     }
 
     .remove-btn {
@@ -101,6 +106,7 @@
       "Tianqi Pan",
       "Will Grover",
       "Yiting Li"
+      "Leonardo"
     ];
 
     let currentList = [...allNames];
@@ -126,6 +132,10 @@
         const li = document.createElement("li");
         li.style.animationDelay = `${index * 0.05}s`;
         li.textContent = name;
+
+        li.onclick = () => {
+          li.classList.toggle("green"); // Toggle the green class on click
+        };
 
         const btn = document.createElement("button");
         btn.className = "remove-btn";
