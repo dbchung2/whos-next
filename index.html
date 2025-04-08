@@ -33,12 +33,32 @@
       transform: translateY(20px);
       animation: fadeInUp 0.4s ease forwards;
       transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
-      cursor: pointer;
+      position: relative;
     }
 
     li:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: #ff4d4d;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .remove-btn:hover {
+      background: #cc0000;
     }
 
     button {
@@ -111,15 +131,23 @@
       listElement.innerHTML = "";
       list.forEach((name, index) => {
         const li = document.createElement("li");
-        li.textContent = name;
         li.style.animationDelay = `${index * 0.05}s`;
-        li.onclick = () => {
+        li.textContent = name;
+
+        // Create X button
+        const btn = document.createElement("button");
+        btn.className = "remove-btn";
+        btn.innerHTML = "×";
+        btn.onclick = (e) => {
+          e.stopPropagation(); // Prevent click from bubbling
           li.style.opacity = '0';
           setTimeout(() => {
             currentList = currentList.filter(n => n !== name);
             renderList(currentList);
-          }, 300); // matches fade-out duration
+          }, 300);
         };
+
+        li.appendChild(btn);
         listElement.appendChild(li);
       });
     }
