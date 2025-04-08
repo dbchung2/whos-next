@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Name List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      margin: 10px auto;
+      padding: 12px 20px;
+      border-radius: 8px;
+      max-width: 300px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Randomized Name List</h1>
+  <ul id="nameList"></ul>
+  <button onclick="randomizeNames()">Shuffle Again</button>
+
+  <script>
+    const names = [
+      "Daniel Chung",
+      "Farnam Mansouri",
+      "Jake Gilmour",
+      "Joseph Nahm",
+      "Marcos Brito",
+      "Priya Nayak",
+      "Robert Maldonado",
+      "Tianqi Pan",
+      "Will Grover",
+      "Yiting Li"
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function randomizeNames() {
+      const shuffled = shuffle([...names]);
+      const list = document.getElementById("nameList");
+      list.innerHTML = "";
+      shuffled.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        list.appendChild(li);
+      });
+    }
+
+    // Initial load
+    randomizeNames();
+  </script>
+
+</body>
+</html>
