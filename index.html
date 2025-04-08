@@ -11,22 +11,36 @@
       padding: 40px;
       text-align: center;
     }
+
     h1 {
       color: #333;
       margin-bottom: 20px;
     }
+
     ul {
       list-style-type: none;
       padding: 0;
     }
+
     li {
       background: #fff;
       margin: 10px auto;
       padding: 12px 20px;
       border-radius: 8px;
       max-width: 300px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.4s ease forwards;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+      cursor: pointer;
     }
+
+    li:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -36,9 +50,23 @@
       color: white;
       border-radius: 5px;
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
+
     button:hover {
       background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -49,7 +77,7 @@
   <button onclick="randomizeNames()">Shuffle Again</button>
 
   <script>
-    const names = [
+    const allNames = [
       "Daniel Chung",
       "Farnam Mansouri",
       "Jake Gilmour",
@@ -62,6 +90,8 @@
       "Yiting Li"
     ];
 
+    let currentList = [...allNames];
+
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -71,13 +101,26 @@
     }
 
     function randomizeNames() {
-      const shuffled = shuffle([...names]);
-      const list = document.getElementById("nameList");
-      list.innerHTML = "";
-      shuffled.forEach(name => {
+      currentList = [...allNames]; // reset to full list
+      const shuffled = shuffle([...currentList]);
+      renderList(shuffled);
+    }
+
+    function renderList(list) {
+      const listElement = document.getElementById("nameList");
+      listElement.innerHTML = "";
+      list.forEach((name, index) => {
         const li = document.createElement("li");
         li.textContent = name;
-        list.appendChild(li);
+        li.style.animationDelay = `${index * 0.05}s`;
+        li.onclick = () => {
+          li.style.opacity = '0';
+          setTimeout(() => {
+            currentList = currentList.filter(n => n !== name);
+            renderList(currentList);
+          }, 300); // matches fade-out duration
+        };
+        listElement.appendChild(li);
       });
     }
 
