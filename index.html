@@ -26,39 +26,32 @@
       background: #fff;
       margin: 10px auto;
       padding: 12px 20px;
+      padding-right: 40px;
       border-radius: 8px;
       max-width: 300px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.4s ease forwards;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
       position: relative;
-    }
-
-    li:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      text-align: left;
     }
 
     .remove-btn {
       position: absolute;
-      top: 8px;
-      right: 12px;
-      background: #ff4d4d;
+      top: 6px;
+      right: 10px;
+      background: none;
       border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
+      color: #888;
+      font-size: 18px;
       cursor: pointer;
-      font-size: 14px;
-      line-height: 18px;
+      padding: 0;
+      line-height: 1;
     }
 
     .remove-btn:hover {
-      background: #cc0000;
+      color: #d00;
     }
 
     button {
@@ -134,12 +127,11 @@
         li.style.animationDelay = `${index * 0.05}s`;
         li.textContent = name;
 
-        // Create X button
         const btn = document.createElement("button");
         btn.className = "remove-btn";
         btn.innerHTML = "×";
         btn.onclick = (e) => {
-          e.stopPropagation(); // Prevent click from bubbling
+          e.stopPropagation();
           li.style.opacity = '0';
           setTimeout(() => {
             currentList = currentList.filter(n => n !== name);
